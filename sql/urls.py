@@ -8,8 +8,9 @@ import sql.query_privileges
 import sql.sql_optimize
 from common import auth, config, workflow, dashboard, check
 from sql import views, sql_workflow, sql_analyze, query, slowlog, instance, instance_account, db_diagnostic, \
-    resource_group, binlog, data_dictionary
-from sql.utils import tasks, ding_api
+    resource_group, binlog, data_dictionary, sql_stats
+from sql.utils import tasks
+from common.utils import ding_api
 
 urlpatterns = [
     path('', views.index),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('sqlanalyze/', views.sqlanalyze),
     path('sqlquery/', views.sqlquery),
     path('slowquery/', views.slowquery),
+    path('sqlstats/', views.sqlstats),
     path('sqladvisor/', views.sqladvisor),
     path('slowquery_advisor/', views.sqladvisor),
     path('queryapplylist/', views.queryapplylist),
@@ -127,6 +129,9 @@ urlpatterns = [
     path('slowquery/optimize_sqltuning/', sql.sql_optimize.optimize_sqltuning),
     path('slowquery/optimize_soar/', sql.sql_optimize.optimize_soar),
     path('slowquery/report/', slowlog.report),
+
+    path('sqlstats/top/', sql_stats.top_sql),
+    path('sqlstats/topslow/', sql_stats.top_slow_sql),
 
     path('db_diagnostic/process/', db_diagnostic.process),
     path('db_diagnostic/create_kill_session/', db_diagnostic.create_kill_session),
